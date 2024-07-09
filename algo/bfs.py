@@ -19,14 +19,14 @@ def bfs(graph: Graph, source: int, target: int = None) -> tuple[int, int]:
     queue = [(source, 0)]
 
     while queue:
-        curr, d = queue.pop(0)
+        cur, d = queue.pop(0)
 
-        if target is not None and curr == target:
-            return d, curr
+        if target is not None and cur == target:
+            return d, cur
         
-        for i in graph[curr]:
+        for i in graph[cur]:
             if not visited[i]:
                 queue.append((i, d+1))
                 visited[i] = True
     
-    return d, curr
+    return d, cur
