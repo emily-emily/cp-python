@@ -2,7 +2,7 @@ class Trie:
     """
     Trie data structure.
     """
-    def __init__(self, valid=False):
+    def __init__(self, valid: bool = False):
         """
         Initialize a Trie node.
 
