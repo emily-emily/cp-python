@@ -1,3 +1,5 @@
+import numpy as np
+
 def gcd(a: int, b: int) -> int:
     """
     Euclidean algorithm for GCD (greatest common divisor)
@@ -47,3 +49,54 @@ def stirling_number(n: int, k: int) -> int:
     if n == 0 or k == 0:
         return 0
     return k * stirling_number(n - 1, k) + stirling_number(n - 1, k - 1)
+
+def fast_exp(base: int, exp: int, mod: int|None = None) -> int:
+    """
+    Fast exponentiation
+
+    Runtime: O(log(exp))
+
+    This function calculates (base^exp) % mod using the fast exponentiation algorithm.
+    """
+    ans = 1
+    if mod is not None:
+        base %= mod
+
+    while exp:
+        if exp & 1:
+            ans *= base
+            if mod is not None:
+                ans %= mod
+        base *= base
+        if mod is not None:
+            base %= mod
+        exp >>= 1
+
+    return ans
+
+def matrix_exp(matrix: np.ndarray, exp: int, mod: int|None = None) -> np.ndarray:
+    """
+    Matrix exponentiation
+
+    Runtime: O(log(exp) * n^3)
+
+    This function calculates (matrix^exp) % mod using the fast exponentiation algorithm.
+
+    Assumes that the matrix is square.
+    """
+    n = matrix.shape[0]
+    ans = np.eye(n, dtype=int)
+    if mod is not None:
+        matrix %= mod
+
+    while exp:
+        if exp & 1:
+            ans = ans @ matrix
+            if mod is not None:
+                ans %= mod
+        matrix = matrix @ matrix
+        if mod is not None:
+            matrix %= mod
+        exp >>= 1
+
+    return ans
